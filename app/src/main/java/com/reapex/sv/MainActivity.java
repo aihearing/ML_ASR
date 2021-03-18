@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.huawei.agconnect.config.AGConnectServicesConfig;
 import com.huawei.hms.mlsdk.common.MLApplication;
@@ -21,8 +22,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "Leo Main: ";
     private static final int PERMISSION_REQUESTS = 1;
+
     public static final String API_KEY = "client/api_key";
 
+    TextView mTvRecordResult_sv;
     RecognizerSV mReco;
 
     @Override
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = 1;
         setContentView(R.layout.activity_main);
         findViewById(R.id.button_asr_start).setOnClickListener(this);
+        mTvRecordResult_sv = findViewById(R.id.textview_showing_asr);
 
         setApiKey();
         if (!this.allPermissionsGranted()) {
@@ -41,10 +45,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.button_asr_start) {
-            int i = 2;
             mReco = new RecognizerSV(this);
         }
     }
+
+    private class OnCallBack implements OnResultsReadyInterface {
+        @Override
+        public void onResults(ArrayList<String> results) {
+            if (results != null && results.size() > 0) {
+                if (results.size() == 1) {
+                    mTvRecordResult_sv.setText(results.get(0)+"\nthe end.");
+                } else {
+                    StringBuilder sb = new StringBuilder();
+                    if (results.size() > 5) {
+                        results = (ArrayList<String>) results.subList(0, 5);
+                    }
+                    for (String result : results) {
+                        sb.append(result).append("\n");
+                    }
+                    mTvRecordResult_sv.setText(sb.toString()+"L1_455");
+                }
+            }
+        }
+
+        @Override
+        public void onError(int error) {
+        }
+
+        @Override
+        public void onFinsh() {
+        }
+    }
+
+
 
     private void setApiKey(){
         AGConnectServicesConfig config = AGConnectServicesConfig.fromContext(getApplication());
