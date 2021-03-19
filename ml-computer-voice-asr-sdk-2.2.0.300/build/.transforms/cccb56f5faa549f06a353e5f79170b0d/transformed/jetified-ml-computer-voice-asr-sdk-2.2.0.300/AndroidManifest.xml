@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huawei.hms.mlsdk.asr.sdk"
+    android:versionCode="20200300"
+    android:versionName="2.2.0.300" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="29" />
+
+    <application>
+
+        <!--
+            <meta-data
+            android:name="com.huawei.hms:ml-computer-voice-asr-sdk"
+            android:value="ml-computer-voice-asr-sdk:${ml_sdk_mate}" />
+        -->
+    </application>
+
+</manifest>

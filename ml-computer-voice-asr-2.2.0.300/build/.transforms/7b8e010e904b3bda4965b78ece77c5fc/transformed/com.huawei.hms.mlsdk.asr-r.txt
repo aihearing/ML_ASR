@@ -1,0 +1,2 @@
+com.huawei.hms.mlsdk.asr
+string app_name
