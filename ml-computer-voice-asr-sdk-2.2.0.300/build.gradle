@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('ml-computer-voice-asr-sdk-2.2.0.300.aar'))

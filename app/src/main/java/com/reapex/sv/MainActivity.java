@@ -20,10 +20,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    private static final String TAG = "Leo Main: ";
+    private static final String TAG = "Leo";
     private static final int PERMISSION_REQUESTS = 1;
     public static final String API_KEY = "client/api_key";
-    private ClassOnResultInterface oConn = new ClassOnResultInterface();
+    private ClassOnResultInterface oFromInterface = new ClassOnResultInterface();
 
     RecognizerSV mReco;
     TextView tvASR;
@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.button_asr_start) {
-            int i = 2;
-            mReco = new RecognizerSV(this,oConn);
+            Log.d(TAG, "第一次RecognizerSV");
+            mReco = new RecognizerSV(this, oFromInterface);
+            Log.d(TAG, "第一次RecognizerSV 结束");
         }
     }
 
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onResults(ArrayList<String> results) {
             if (results != null && results.size() > 0) {
                 if (results.size() == 1) {
-                    tvASR.setText(results.get(0)+"\nthe end.");
+                    tvASR.setText(results.get(0)+"。。");
                 } else {
                     StringBuilder sb = new StringBuilder();
                     if (results.size() > 5) {
@@ -65,21 +66,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     for (String result : results) {
                         sb.append(result).append("\n");
                     }
-                    tvASR.setText(sb.toString()+"L1_455");
+                    tvASR.setText(sb.toString()+"L1_69 Never Happen");
                 }
             }
+            Log.d(TAG, "OnResults");
         }
 
         @Override
-        public void onError(int error) {
-        }
+        public void onError(int error) {        }
 
         @Override
         public void onFinsh() {        }
     }
 
-
-        private void setApiKey(){
+    private void setApiKey(){
         AGConnectServicesConfig config = AGConnectServicesConfig.fromContext(getApplication());
         MLApplication.getInstance().setApiKey(config.getString(API_KEY));
     }

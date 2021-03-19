@@ -1,4 +1,4 @@
- package com.reapex.sv;
+package com.reapex.sv;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,20 +13,28 @@ import java.util.ArrayList;
 
 public class RecognizerSV {
     private final static String TAG = "Leo";
+    public Intent mRecoIntent;
 
+    protected Context mContext;
     protected MLAsrRecognizer mRecognizer;
+
     private OnResultsReadyInterface mInterface;  //2 接口变量
 
     public RecognizerSV(Context pContext, OnResultsReadyInterface pInterface) {
         try {
             mInterface = pInterface;        //3 提供注册接口的方法 暴露接口给调用者；
         } catch (ClassCastException e) {
-            Log.e(TAG, e.toString());
+            Log.d(TAG, e.toString());
         }
+        mContext = pContext;
+        initReco();
+    }
 
-        mRecognizer = MLAsrRecognizer.createAsrRecognizer(pContext);    //a 用户调用接口创建一个语音识别器。
+    protected void initReco(){
+        mRecognizer = MLAsrRecognizer.createAsrRecognizer(mContext);    //a 用户调用接口创建一个语音识别器。
+
         mRecognizer.setAsrListener(new ListenerSV());                   //b 绑定个listener
-        Intent mRecoIntent = new Intent(MLAsrConstants.ACTION_HMS_ASR_SPEECH);
+        mRecoIntent = new Intent(MLAsrConstants.ACTION_HMS_ASR_SPEECH);
         mRecoIntent
                 .putExtra(MLAsrConstants.LANGUAGE, "zh-CN")
                 .putExtra(MLAsrConstants.FEATURE, MLAsrConstants.FEATURE_WORDFLUX);
@@ -54,7 +62,8 @@ public class RecognizerSV {
             if (results != null) {
                 mResultsList.clear();
                 mResultsList.add(results.getString(MLAsrRecognizer.RESULTS_RECOGNIZED));
-                Log.d(TAG, "onResults is " + results);
+                Log.d(TAG, "onResults is _sv -------------  " + results);
+                initReco();
             }
         }
 
@@ -66,7 +75,7 @@ public class RecognizerSV {
 
         @Override
         public void onError(int error, String errorMessage) {
-            Log.e(TAG, "onError: " + errorMessage);
+            Log.d(TAG, "onError: " + errorMessage);
             // If you don't add this, there will be no response after you cut the network
         }
 
@@ -74,28 +83,26 @@ public class RecognizerSV {
         // 通知应用状态发生改变，该接口并非运行在主线程中，返回结果需要在子线程中处理。
         //sv listener 不关闭，但语音识别还是关闭了
         public void onState(int state, Bundle params) {
-            Log.e(TAG, "onState: L_142 " + state);
+            Log.d(TAG, "onState: L_77 " + state);
             if (state == MLAsrConstants.STATE_NO_SOUND_TIMES_EXCEED) {
-                Log.e(TAG, "onState: L_142 no sound " + state);
+                Log.d(TAG, "onState: L_79 no sound " + state);
             }
         }
 
         @Override   //4
         public void onStartListening() {
-            // 录音器开始接收声音。
-            Log.d(TAG, "onStartListening--");
+            Log.d(TAG, "录音器开始接收声音。onStartListening--");
         }
 
         @Override
         public void onStartingOfSpeech() {
-            // 用户开始讲话，即语音识别器检测到用户开始讲话。
-            Log.d(TAG, "onStartingOfSpeech--");
+            Log.d(TAG, "用户开始讲话，即语音识别器检测到用户开始讲话。 onStartingOfSpeech--");
         }
     }
 
     public interface OnResultsReadyInterface {
         //1 定义接口和接口中的方法
-       void onResults(ArrayList<String> results);
+        void onResults(ArrayList<String> results);
         void onFinsh();
         void onError(int error);
     }

@@ -1,2 +1,4 @@
+include ':ml-computer-voice-asr-sdk-2.2.0.300'
+include ':ml-computer-voice-asr-2.2.0.300'
 include ':app'
 rootProject.name = "MLASR"
