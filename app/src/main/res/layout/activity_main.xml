@@ -12,18 +12,39 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@+id/button_asr_start"
+        app:layout_constraintBottom_toTopOf="@+id/button_asr_short"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button_asr_start"
+        android:id="@+id/button_asr_short"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="button_asr_start"
+        android:onClick="onClick"
+        android:text="asr short"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.145"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_asrlong"
+        android:layout_width="188dp"
+        android:layout_height="50dp"
+        android:background="@android:drawable/button_onoff_indicator_on"
+        android:backgroundTint="#2196F3"
+        android:backgroundTintMode="screen"
+        android:onClick="onClick"
+        android:text="ASR Long"
+        app:icon="@android:drawable/btn_plus"
+        app:iconTint="#E91E63"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
+        app:layout_constraintStart_toEndOf="@+id/button_asr_short"
+        app:strokeColor="#03A9F4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

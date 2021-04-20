@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.huawei.agconnect.config.AGConnectServicesConfig;
 import com.huawei.hms.mlsdk.common.MLApplication;
+import com.reapex.sv.asrlong.RealTimeTranscriptionActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = 1;
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.button_asr_start).setOnClickListener(this);
+        findViewById(R.id.button_asr_short).setOnClickListener(this);
         tvASR = findViewById(R.id.textview_showing_asr);
 
         setApiKey();
@@ -45,10 +47,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.button_asr_start) {
+        if (view.getId() == R.id.button_asr_short) {
             Log.d(TAG, "第一次RecognizerSV");
             mReco = new RecognizerSV(this, oFromInterface);
             Log.d(TAG, "第一次RecognizerSV 结束");
+        }else if (view.getId() == R.id.button_asrlong) {
+            startActivity(new Intent(this, RealTimeTranscriptionActivity.class));
         }
     }
 
