@@ -20,7 +20,7 @@ import com.reapex.sv.asrlong.RealTimeTranscriptionActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener  {
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "Leo";
     private static final int PERMISSION_REQUESTS = 1;
@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = 1;
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.button_asr_short).setOnClickListener(this);
         tvASR = findViewById(R.id.textview_showing_asr);
 
         setApiKey();
@@ -45,8 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    @Override
-    public void onClick(View view) {
+    public void clickButton(View view) {
         if (view.getId() == R.id.button_asr_short) {
             Log.d(TAG, "第一次RecognizerSV");
             mReco = new RecognizerSV(this, oFromInterface);
